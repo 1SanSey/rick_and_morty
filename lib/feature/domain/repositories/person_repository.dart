@@ -7,6 +7,6 @@ abstract class PersonRepository {
   // абстрактный класс определяет контракт, а реализация его будет в уровне Data
   //тип Either может возвращать и ошибки (Left), и список персонажей(Right) одновременно
   Future<Either<Failure, List<PersonEntity>>> getAllPersons(
-      int page); // подгрузка персонажей, пагинация
+      int page); // подгрузка персонажей и пагинация
   Future<Either<Failure, List<PersonEntity>>> searchPerson(String query);
 }
