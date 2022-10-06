@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+//entities - сущности, описывают бизнес-логику приложения
 class PersonEntity extends Equatable {
   final int id;
   final String name;

@@ -6,6 +6,8 @@ import 'package:rick_and_morty/feature/domain/repositories/person_repository.dar
 import '../../../core/error/failure.dart';
 import '../entities/person_entity.dart';
 
+// usecases - методы использования или сценарии (интеракторы), организуют поток данных в сущности и из них
+
 class AllPersons extends UseCase<List<PersonEntity>, PagePersonParams> {
   final PersonRepository personRepository;
 
@@ -24,5 +26,5 @@ class PagePersonParams extends Equatable {
   PagePersonParams({required this.page});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [page];
 }
