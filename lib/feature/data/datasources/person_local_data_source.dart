@@ -9,11 +9,11 @@ abstract class PersonLocalDataSource {
   Future<void> personsToCache(List<PersonModel> persons);
 }
 
-class PersonDataSourceImpl implements PersonLocalDataSource {
+class PersonLocalDataSourceImpl implements PersonLocalDataSource {
   final SharedPreferences sharedPreferences;
   final CACHED_PERSONS_LIST = 'CACHED_PERSONS_LIST';
 
-  PersonDataSourceImpl({required this.sharedPreferences});
+  PersonLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
   Future<List<PersonModel>> getLastPersonsFromCache() {
