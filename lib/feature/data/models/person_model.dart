@@ -28,22 +28,23 @@ class PersonModel extends PersonEntity {
             created: created);
   factory PersonModel.fromJson(Map<String, dynamic> json) {
     return PersonModel(
-        id: json['id'] as int,
-        name: json['name'] as String,
-        status: json['status'] as String,
-        species: json['species'] as String,
-        type: json['type'] as String,
-        gender: json['gender'] as String,
-        origin: json['origin'] != null
-            ? LocationModel.fromJson(json['origin'])
-            : null,
-        location: json['location'] != null
-            ? LocationModel.fromJson(json['location'])
-            : null,
-        image: json['image'] as String,
-        episode:
-            (json['episode'] as List<dynamic>).map((e) => e as String).toList(),
-        created: DateTime.parse(json['created'] as String));
+      id: json['id'] as int,
+      name: json['name'] as String,
+      status: json['status'] as String,
+      species: json['species'] as String,
+      type: json['type'] as String,
+      gender: json['gender'] as String,
+      origin: json['origin'] != null
+          ? LocationModel.fromJson(json['origin'])
+          : null,
+      location: json['location'] != null
+          ? LocationModel.fromJson(json['location'])
+          : null,
+      image: json['image'] as String,
+      episode:
+          (json['episode'] as List<dynamic>).map((e) => e as String).toList(),
+      created: DateTime.parse(json['created'] as String),
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -58,7 +59,7 @@ class PersonModel extends PersonEntity {
       'location': location,
       'image': image,
       'episode': episode,
-      'created': created
+      'created': created.toIso8601String(),
     };
   }
 }

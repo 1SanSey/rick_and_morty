@@ -1,5 +1,3 @@
-import 'dart:html';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:rick_and_morty/core/platform/network_info.dart';

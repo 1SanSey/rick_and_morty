@@ -31,11 +31,11 @@ class PersonLocalDataSourceImpl implements PersonLocalDataSource {
 
   @override
   Future<void> personsToCache(List<PersonModel> persons) {
-    final List<String> jsonPersonList =
+    final List<String> jsonPersonsList =
         persons.map((person) => json.encode(person.toJson())).toList();
 
-    sharedPreferences.setStringList(CACHED_PERSONS_LIST, jsonPersonList);
-
-    return Future.value(jsonPersonList);
+    sharedPreferences.setStringList(CACHED_PERSONS_LIST, jsonPersonsList);
+    print('Persons to write Cache: ${jsonPersonsList.length}');
+    return Future.value(jsonPersonsList);
   }
 }
