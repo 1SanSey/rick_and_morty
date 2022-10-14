@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:rick_and_morty/common/app_colors.dart';
 import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';
 import 'package:rick_and_morty/feature/presentation/widgets/person_cache_image_widget.dart';
@@ -20,8 +17,8 @@ class PersonCard extends StatelessWidget {
       child: Row(
         children: <Widget>[
           PersonCacheImage(
-            width: 160,
-            height: 160,
+            width: 174,
+            height: 174,
             imageUrl: person.image,
           ),
           const SizedBox(
