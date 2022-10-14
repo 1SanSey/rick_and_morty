@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
-      body: const PersonsList(),
+      body: PersonsList(),
     );
   }
 }
