@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:rick_and_morty/common/app_colors.dart';
 import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';
+import 'package:rick_and_morty/feature/presentation/widgets/person_cache_image_widget.dart';
 
 class PersonCard extends StatelessWidget {
   const PersonCard({required this.person, super.key});
@@ -18,10 +19,10 @@ class PersonCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8)),
       child: Row(
         children: <Widget>[
-          Container(
+          PersonCacheImage(
             width: 160,
             height: 160,
-            child: Image.network(person.image),
+            imageUrl: person.image,
           ),
           const SizedBox(
             width: 16,
