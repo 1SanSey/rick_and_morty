@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rick_and_morty/feature/presentation/bloc/person_list_cubit/person_list_cubit.dart';
-
 import '../widgets/persons_list_widget.dart';
 
 class HomePage extends StatelessWidget {
