@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty/common/app_colors.dart';
 import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';

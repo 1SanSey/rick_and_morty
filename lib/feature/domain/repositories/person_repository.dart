@@ -11,5 +11,6 @@ abstract class PersonRepository {
   // тип Either может возвращать и ошибки (Left), и список персонажей(Right) одновременно
   Future<Either<Failure, List<PersonEntity>>> getAllPersons(
       int page); // подгрузка персонажей и пагинация
-  Future<Either<Failure, List<PersonEntity>>> searchPerson(String query);
+  Future<Either<Failure, List<PersonEntity>>> searchPerson(
+      String query, int page);
 }

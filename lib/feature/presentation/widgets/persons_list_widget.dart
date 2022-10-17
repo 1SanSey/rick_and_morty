@@ -1,17 +1,16 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/person_list_cubit/person_list_cubit.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/person_list_cubit/person_list_state.dart';
 import 'package:rick_and_morty/feature/presentation/widgets/person_card_widget.dart';
+import '../../../common/loading_indicator.dart';
 
 class PersonsList extends StatelessWidget {
-  final scrollController = ScrollController();
-
   PersonsList({super.key});
+
+  final scrollController = ScrollController();
 
   void setupScrollController(BuildContext context) {
     scrollController.addListener(() {
@@ -31,7 +30,7 @@ class PersonsList extends StatelessWidget {
       bool isLoading = false;
       List<PersonEntity> persons = [];
       if (state is PersonLoading && state.isFirstFetch) {
-        return _loadingIndicator();
+        return loadingIndicator();
       } else if (state is PersonLoading) {
         persons = state.oldPersonsList;
         isLoading = true;
@@ -58,7 +57,7 @@ class PersonsList extends StatelessWidget {
                 scrollController
                     .jumpTo(scrollController.position.maxScrollExtent);
               });
-              return _loadingIndicator();
+              return loadingIndicator();
             }
           },
           separatorBuilder: (context, index) {
@@ -66,17 +65,5 @@ class PersonsList extends StatelessWidget {
           },
           itemCount: persons.length + (isLoading ? 1 : 0));
     });
-  }
-
-  Widget _loadingIndicator() {
-    return const Padding(
-      padding: EdgeInsets.all(8.0),
-      child: Center(
-        child: SpinKitDualRing(
-          color: Colors.white,
-          size: 60.0,
-        ),
-      ),
-    );
   }
 }

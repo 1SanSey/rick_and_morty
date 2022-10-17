@@ -4,13 +4,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class PersonCacheImage extends StatelessWidget {
   final String? imageUrl;
-  final double width, height;
+  final double? width, height;
 
   const PersonCacheImage(
-      {super.key,
-      required this.imageUrl,
-      required this.width,
-      required this.height});
+      {super.key, required this.imageUrl, this.width, this.height});
 
   Widget _imageWidget(ImageProvider<Object> imageProvider) {
     return Container(

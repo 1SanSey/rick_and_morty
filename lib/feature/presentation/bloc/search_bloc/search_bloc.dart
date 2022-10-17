@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty/core/error/failure.dart';
+import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';
 import 'package:rick_and_morty/feature/domain/usecases/search_person.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/search_bloc/search_event.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/search_bloc/search_state.dart';
@@ -18,14 +19,33 @@ class PersonSearchBloc extends Bloc<PersonSearchEvent, PersonSearchState> {
 
   FutureOr<void> _onEvent(
       SearchPersons event, Emitter<PersonSearchState> emit) async {
-    emit(PersonSearchLoading());
-    final failureOrPerson =
-        await searchPerson(SearchPersonParams(query: event.personQuery));
+    var oldPerson = <PersonEntity>[];
+    final currentState = state;
+
+    emit(PersonSearchLoading(oldPerson, isFirstFetch: event.searchPage == 1));
+
+    if (currentState is PersonSearchLoaded) {
+      oldPerson = currentState.persons;
+    }
+
+    final failureOrPerson = await searchPerson(
+        SearchPersonParams(query: event.personQuery, page: event.searchPage));
     emit(failureOrPerson.fold(
         // метод fold (складывать) вовращает в L ошибку, а в R результат
+
         (failure) => PersonSearchError(message: _mapFailureToMessage(failure)),
-        (person) => PersonSearchLoaded(persons: person)));
+        (person) {
+      final persons = oldPerson;
+
+      persons.addAll(person);
+      //print(person.length);
+      //  print(persons.length);
+
+      return PersonSearchLoaded(persons: persons);
+    }));
   }
+
+  //FutureOr<void> get LoadSearchEvent => _onEvent();
 
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
