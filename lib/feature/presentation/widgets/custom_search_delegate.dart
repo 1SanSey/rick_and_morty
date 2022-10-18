@@ -1,28 +1,30 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rick_and_morty/common/loading_indicator.dart';
 import 'package:rick_and_morty/feature/domain/entities/person_entity.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/search_bloc/search_event.dart';
 import 'package:rick_and_morty/feature/presentation/bloc/search_bloc/search_state.dart';
 import 'package:rick_and_morty/feature/presentation/widgets/search_result.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import '../../../common/loading_indicator.dart';
 
 class CustomSearchDelegate extends SearchDelegate {
   CustomSearchDelegate() : super(searchFieldLabel: 'Search for characters...');
 
   final _suggestions = ['Rick', 'Morty', 'Summer', 'Beth', 'Jerry'];
   final scrollController = ScrollController();
+  List<PersonEntity> person = [];
   int page = 1;
-  bool isFirstBuildResults = true;
 
   void setupScrollController(BuildContext context) {
     scrollController.addListener(() {
       if (scrollController.position.atEdge) {
         if (scrollController.position.pixels != 0) {
           page++;
-          print('Call setupScrollController, page $page');
-          BlocProvider.of<PersonSearchBloc>(context)
+          BlocProvider.of<PersonSearchBloc>(context, listen: false)
               .add(SearchPersons(query, page));
         }
       }
@@ -36,6 +38,8 @@ class CustomSearchDelegate extends SearchDelegate {
           onPressed: () {
             query = '';
             showSuggestions(context);
+            person.clear();
+            page = 1;
           },
           icon: const Icon(Icons.clear))
     ];
@@ -54,24 +58,19 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     print(
         'Inside custom search delegate and search query is $query and page $page');
-    setupScrollController(context);
-    // if (isFirstBuildResults) {
+
     BlocProvider.of<PersonSearchBloc>(context).add(SearchPersons(query, page));
-    // isFirstBuildResults = false;
-    //}
-    //print(isFirstBuildResults);
+
+    setupScrollController(context);
     return BlocBuilder<PersonSearchBloc, PersonSearchState>(
         builder: (context, state) {
       bool isLoading = false;
-      final List<PersonEntity> person;
-      if (state is PersonSearchLoading && state.isFirstFetch) {
-        return loadingIndicator();
-      } else if (state is PersonSearchLoading) {
+
+      if (state is PersonSearchLoading) {
         isLoading = true;
-        person = state.oldSearchPersonList;
+        return loadingIndicator();
       } else if (state is PersonSearchLoaded) {
         person = state.persons;
-
         if (person.isEmpty) {
           return _showErrorText('No characters with that name were found');
         }
@@ -86,10 +85,11 @@ class CustomSearchDelegate extends SearchDelegate {
           controller: scrollController,
           itemBuilder: (context, index) {
             if (index < person.length) {
-              PersonEntity result = person[index];
-              print('call Builder');
-              return SearchResult(personResult: result);
+              //PersonEntity result = person[index];
+
+              return SearchResult(personResult: person[index]);
             } else {
+              //этот код не срабатывает
               Timer(const Duration(microseconds: 30), () {
                 scrollController
                     .jumpTo(scrollController.position.maxScrollExtent);

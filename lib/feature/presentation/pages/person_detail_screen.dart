@@ -60,7 +60,7 @@ class PersonDetailPage extends StatelessWidget {
               height: 16,
             ),
             if (person.type.isNotEmpty) ...buildText('Type:', person.type),
-            ...buildText('Gender:', person.status),
+            ...buildText('Gender:', person.gender),
             ...buildText(
                 'Number of episodes:', person.episode.length.toString()),
             ...buildText('Species:', person.species),

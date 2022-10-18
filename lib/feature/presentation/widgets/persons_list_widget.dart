@@ -53,6 +53,7 @@ class PersonsList extends StatelessWidget {
             if (index < persons.length) {
               return PersonCard(person: persons[index]);
             } else {
+              print('New object');
               Timer(const Duration(microseconds: 30), () {
                 scrollController
                     .jumpTo(scrollController.position.maxScrollExtent);

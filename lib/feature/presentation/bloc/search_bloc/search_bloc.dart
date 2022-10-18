@@ -38,8 +38,8 @@ class PersonSearchBloc extends Bloc<PersonSearchEvent, PersonSearchState> {
       final persons = oldPerson;
 
       persons.addAll(person);
-      //print(person.length);
-      //  print(persons.length);
+      print(person.length);
+      print(persons.length);
 
       return PersonSearchLoaded(persons: persons);
     }));
