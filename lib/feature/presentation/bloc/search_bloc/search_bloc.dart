@@ -22,30 +22,29 @@ class PersonSearchBloc extends Bloc<PersonSearchEvent, PersonSearchState> {
     var oldPerson = <PersonEntity>[];
     final currentState = state;
 
-    emit(PersonSearchLoading(oldPerson, isFirstFetch: event.searchPage == 1));
-
     if (currentState is PersonSearchLoaded) {
       oldPerson = currentState.persons;
     }
 
+    emit(PersonSearchLoading(oldPerson, isFirstFetch: event.searchPage == 1));
+
     final failureOrPerson = await searchPerson(
         SearchPersonParams(query: event.personQuery, page: event.searchPage));
-    emit(failureOrPerson.fold(
+    failureOrPerson.fold(
         // метод fold (складывать) вовращает в L ошибку, а в R результат
 
-        (failure) => PersonSearchError(message: _mapFailureToMessage(failure)),
+        (failure) =>
+            emit(PersonSearchError(message: _mapFailureToMessage(failure))),
         (person) {
+      //final persons = (state as PersonSearchLoading).oldSearchPersonList;
       final persons = oldPerson;
-
       persons.addAll(person);
-      print(person.length);
-      print(persons.length);
+      //print(person.length);
+      //print(persons.length);
 
-      return PersonSearchLoaded(persons: persons);
-    }));
+      emit(PersonSearchLoaded(persons: persons));
+    });
   }
-
-  //FutureOr<void> get LoadSearchEvent => _onEvent();
 
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {

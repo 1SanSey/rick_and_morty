@@ -66,11 +66,14 @@ class CustomSearchDelegate extends SearchDelegate {
         builder: (context, state) {
       bool isLoading = false;
 
-      if (state is PersonSearchLoading) {
-        isLoading = true;
+      if (state is PersonSearchLoading && state.isFirstFetch) {
         return loadingIndicator();
+      } else if (state is PersonSearchLoading) {
+        isLoading = true;
+        person = state.oldSearchPersonList;
       } else if (state is PersonSearchLoaded) {
         person = state.persons;
+
         if (person.isEmpty) {
           return _showErrorText('No characters with that name were found');
         }
